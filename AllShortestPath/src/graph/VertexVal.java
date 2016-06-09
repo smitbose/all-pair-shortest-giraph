@@ -13,7 +13,13 @@ public class VertexVal implements Writable{
 	 * holds the shortest path to each vertex
 	 */
 	private int []shortestpath;
-	
+	/**
+	 * Non-parameterized constructor
+	 */
+	public VertexVal()
+	{
+		shortestpath = null;
+	}
 	/**
 	 * Parameterized constructor
 	 * @param arr Array to initialize shortest path
@@ -57,6 +63,7 @@ public class VertexVal implements Writable{
 	@Override
 	public void readFields(DataInput in) throws IOException {
 		int size = in.readInt();
+		shortestpath = new int[size];
 		for(int i=0;i<size;i++)
 		{
 			shortestpath[i] = in.readInt();
