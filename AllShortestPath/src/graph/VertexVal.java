@@ -49,6 +49,8 @@ public class VertexVal implements Writable{
 	 */
 	public void setval(int arr[])
 	{
+		if(shortestpath == null)
+			shortestpath = new int[arr.length];
 		System.arraycopy(arr, 0, shortestpath, 0, arr.length);
 	}
 	
