@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.giraph.worker.WorkerContext;
 
+import core.MyComputation.Compute;
+
 public class MyWorkerContext extends WorkerContext{
 
 	/**

@@ -5,6 +5,7 @@ import graph.VertexVal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import org.apache.giraph.edge.Edge;
@@ -135,4 +136,50 @@ public class MyComputation extends BasicComputation<IntWritable, VertexVal, Null
 		vert.setValue(new VertexVal(i_)); //initializing shortest path distances
 	}
 
+	
+	public class Compute implements Callable<Integer>
+	{
+		/**
+		 * The start and stop limits of the vertices this thread is to process
+		 */
+		private int start,stop;
+		
+		/**
+		 * Parameterized constructor
+		 * @param start
+		 * @param stop
+		 */
+		public Compute(int start,int stop)
+		{
+			this.start = start;
+			this.stop = stop;
+		}
+
+		@Override
+		public Integer call() throws Exception {
+			
+			/*
+			 * Iterate for the vertices this thread has to process
+			 * and relax the distances wherever applicable
+			 */
+			for(int j = start;j<stop;j++)
+			{
+				if(i == j)
+					continue;
+				else if(k_[j]!=Integer.MIN_VALUE)
+				{
+					int sum = k_[j] + i_[k];
+					/*
+					 * Relax the distances
+					 */
+					if(i_[j] == Integer.MIN_VALUE || sum<i_[j])
+					{
+						i_[j] = sum;
+					}
+				}
+			}
+			return 0;
+		}
+		
+	}
 }
