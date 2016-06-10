@@ -30,10 +30,13 @@ public class MyWorkerContext extends WorkerContext{
 	 */
 	int nthreads,offset;
 	
-	public Map<Integer, ArrayList<Compute>> getCompute_units() {
-		return compute_units;
+	public ArrayList<Compute> getCompute_units(Integer i) {
+		return compute_units.get(i);
 	}
-
+	public void setComputeUnits(Integer i,ArrayList<Compute> cunits)
+	{
+		compute_units.put(i, cunits);
+	}
 	public VertexVal getPrevious() {
 		return previous;
 	}
@@ -69,15 +72,12 @@ public class MyWorkerContext extends WorkerContext{
 	}
 
 	@Override
-	public void postSuperstep() {
-		
-		
-	}
+	public void postSuperstep() { }
 
 	@Override
 	public void preApplication() throws InstantiationException,
 			IllegalAccessException {
-		int processors = Runtime.getRuntime().availableProcessors();
+		//int processors = Runtime.getRuntime().availableProcessors();
 		nthreads = 2; //temporarily assumed, to be changed later
 		offset = (int)Math.ceil((double)getTotalNumVertices()/nthreads);
 		pool = Executors.newFixedThreadPool(nthreads);
@@ -86,6 +86,7 @@ public class MyWorkerContext extends WorkerContext{
 
 	@Override
 	public void preSuperstep() {
+		
 		previous = getAggregatedValue(MyAggregator.ID);
 		
 	}
