@@ -33,7 +33,7 @@ public class SNAPReader extends EdgeReader<IntWritable, NullWritable>{
 	/*
 	 * Pattern to break the line, that breaks the line based on tabs and spaces
 	 */
-	private Pattern SEP = Pattern.compile("[\t ]");
+	private Pattern SEP = Pattern.compile("[\t ]+");
 	/*
 	 * processed line to hold the tokenised values
 	 */
@@ -114,7 +114,7 @@ public class SNAPReader extends EdgeReader<IntWritable, NullWritable>{
 	private void processCurrentLine() throws IOException, InterruptedException
 	{
 		Text line = lineRecordReader.getCurrentValue();
-		if(line.charAt(0) == '#' && lineRecordReader.nextKeyValue()) //ignoring comments in dataset
+		while(line.charAt(0) == '#' && lineRecordReader.nextKeyValue()) //ignoring comments in dataset
 		{
 			line = lineRecordReader.getCurrentValue();
 		}

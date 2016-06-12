@@ -6,16 +6,17 @@ import java.io.IOException;
 
 import org.apache.giraph.io.VertexOutputFormat;
 import org.apache.giraph.io.VertexWriter;
-import org.apache.giraph.io.formats.GiraphTextOutputFormat;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.JobContext;
 import org.apache.hadoop.mapreduce.OutputCommitter;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class OutputShortestPath extends VertexOutputFormat<IntWritable, VertexVal, NullWritable>{
 
-	private GiraphTextOutputFormat textOutputFormat;
+	private FileOutputFormat<Text, Text> textOutputFormat;
 	
 	@Override
 	public void checkOutputSpecs(JobContext job) throws IOException,
@@ -26,8 +27,8 @@ public class OutputShortestPath extends VertexOutputFormat<IntWritable, VertexVa
 	@Override
 	public VertexWriter<IntWritable, VertexVal, NullWritable> createVertexWriter(
 			TaskAttemptContext arg0) throws IOException, InterruptedException {
-		//TODO create vertex writer after implementing class
-		return null;
+		
+		return new ShortestPathWriter(textOutputFormat);
 	}
 
 	@Override

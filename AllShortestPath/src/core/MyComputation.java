@@ -50,7 +50,7 @@ public class MyComputation extends BasicComputation<IntWritable, VertexVal, Null
 			aggregate(MyAggregator.ID,vert.getValue());
 		if(V == s) //computation goes on V times after which it terminates
 			vert.voteToHalt();
-		
+		System.out.println("Superstep: "+s);
 	}
 	
 	/**
