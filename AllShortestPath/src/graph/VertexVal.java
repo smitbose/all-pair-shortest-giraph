@@ -26,8 +26,13 @@ public class VertexVal implements Writable{
 	 */
 	public VertexVal(int arr[])
 	{
-		shortestpath = new int[arr.length];
-		System.arraycopy(arr, 0, shortestpath, 0, arr.length);
+		if(arr == null)
+			shortestpath = null;
+		else
+		{
+			shortestpath = new int[arr.length];
+			System.arraycopy(arr, 0, shortestpath, 0, arr.length);
+		}
 	}
 	
 	/**
@@ -49,6 +54,11 @@ public class VertexVal implements Writable{
 	 */
 	public void setval(int arr[])
 	{
+		if(arr == null)
+		{
+			shortestpath = null;
+			return;
+		}
 		if(shortestpath == null)
 			shortestpath = new int[arr.length];
 		System.arraycopy(arr, 0, shortestpath, 0, arr.length);
@@ -65,6 +75,11 @@ public class VertexVal implements Writable{
 	@Override
 	public void readFields(DataInput in) throws IOException {
 		int size = in.readInt();
+		if(size == 0)
+		{
+			shortestpath = null;
+			return;
+		}
 		shortestpath = new int[size];
 		for(int i=0;i<size;i++)
 		{
@@ -74,6 +89,11 @@ public class VertexVal implements Writable{
 
 	@Override
 	public void write(DataOutput out) throws IOException {
+		if(shortestpath == null)
+		{
+			out.writeInt(0);
+			return;
+		}
 		out.writeInt(shortestpath.length);
 		for(int i=0;i<shortestpath.length;i++)
 		{

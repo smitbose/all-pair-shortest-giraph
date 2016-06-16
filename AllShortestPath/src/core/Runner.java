@@ -58,13 +58,15 @@ public class Runner implements Tool {
 		giraphConf.setComputationClass(MyComputation.class);
 		giraphConf.setEdgeInputFormatClass(SNAPInputFormat.class);
 		//giraphConf.setEdgeOutputFormatClass(OutputShortestPath.class);
-		//giraphConf.setVertexOutputFormatClass(OutputShortestPath.class);
+		giraphConf.setVertexOutputFormatClass(OutputShortestPath.class);
 		GiraphFileInputFormat.addEdgeInputPath(giraphConf, new Path(getInputpath()));		
 		giraphConf.setWorkerConfiguration(0, 1, 100.0f);
 		giraphConf.SPLIT_MASTER_WORKER.set(giraphConf, false);
 		giraphConf.LOG_LEVEL.set(giraphConf, "error");
 		giraphConf.setLocalTestMode(true);
 		giraphConf.setMaxNumberOfSupersteps(10000);
+		giraphConf.setWorkerContextClass(MyWorkerContext.class);
+		giraphConf.setMasterComputeClass(MyMasterCompute.class);
 		GiraphJob job = new GiraphJob(giraphConf,getClass().getName());
 		setOutputpath("/home/soumit/internship/"+"output");
 		FileOutputFormat.setOutputPath(job.getInternalJob(), new Path(getOutputpath()));

@@ -35,7 +35,7 @@ public class MyComputation extends BasicComputation<IntWritable, VertexVal, Null
 	public void compute(Vertex<IntWritable, VertexVal, NullWritable> vert,
 			Iterable<NullWritable> mess) throws IOException {		
 		
-		int V = (int) getTotalNumVertices();
+		V = (int) getTotalNumVertices();
 		int s = (int) getSuperstep();
 		k = s-1; //setting the intermediate vertex for this super step
 		i_ = k_ = null;
@@ -50,7 +50,7 @@ public class MyComputation extends BasicComputation<IntWritable, VertexVal, Null
 			aggregate(MyAggregator.ID,vert.getValue());
 		if(V == s) //computation goes on V times after which it terminates
 			vert.voteToHalt();
-		System.out.println("Superstep: "+s);
+		
 	}
 	
 	/**
@@ -75,6 +75,7 @@ public class MyComputation extends BasicComputation<IntWritable, VertexVal, Null
 				ArrayList<Compute> compute_units = initPool(wc);
 				getContext().getProgress(); //no idea why I'm doing this
 				pool.invokeAll(compute_units);
+				vert.getValue().setval(i_); //setting the new value
 			}
 			catch(InterruptedException e)
 			{
@@ -93,7 +94,7 @@ public class MyComputation extends BasicComputation<IntWritable, VertexVal, Null
 		/*
 		 * First get the previously created computational threads if any
 		 */
-		ArrayList<Compute> compute_units = wc.getCompute_units(i);
+		ArrayList<Compute> compute_units = null; //quick fix replacing the getter method from wc
 		if(compute_units == null) //if no previous entries for this vertex existed
 		{
 			int start, stop;
