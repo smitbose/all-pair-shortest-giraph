@@ -32,7 +32,7 @@ On the cluster, set two environments, $HADOOP_CLASSPATH and $LIBJARS:
 Now run it with the following command:
 
 $ hadoop jar $GIRAPH_HOME/giraph-core/target/<giraph jar> org.apache.giraph.GiraphRunner -libjars $LIBAJRS core.MyComputation /
--eif io.SNAPInputFormat -eip <hdfs path> -vof io.OutputShortestPath -op <hdfs output path> / 
+-eif io.SNAPInputFormat -eip <hdfs path> -vof io.OutputShortestPath -op <hdfs output path> /<br /> 
 -mc core.MyMasterCompute -wc core.MyWorkerContext -w 2 -ca giraph.useSuperstepCounters=false
 
 To get Centrality directly, use OutputCentrality after -vof option.
